@@ -26,30 +26,36 @@ client.subscribe('v1/devices/me/rpc/request/+', qos=1, (err, granted) => {
 	console.log('Recebido mensagem:',granted)
 })
 
-function getTwoRandomNumbers() {
-  const num1 = Math.floor(Math.random() * 20 - 10);
-  const num2 = Math.floor(Math.random() * 20 - 10);
-  return [num1, num2];
-}
+function gerarDadosRioDeJaneiro() {
+	const temperatura = Math.floor(Math.random() * 10 + 20); // temperatura entre 20 e 29 graus Celsius
+	const umidade = Math.floor(Math.random() * 30 + 70); // umidade entre 70% e 99%
+	const vento = Math.floor(Math.random() * 20 + 5); // velocidade do vento entre 5 e 24 km/h
+	const sensacaoTermica = Math.floor(Math.random() * 5 + 30); // sensação térmica entre 30 e 34 graus Celsius
+	
+	return [temperatura, umidade, vento, sensacaoTermica];
+  }
+  
 
-let [randomNum1, randomNum2] = getTwoRandomNumbers(); 
+let [temperatura, umidade, vento, sensacaoTermica] = gerarDadosRioDeJaneiro(); 
 
 client.on('connect', () => {
 	setInterval(() => {
 		
-		client.publish('v1/devices/me/telemetry', JSON.stringify({temperature: randomNum1 + 20, humidity: randomNum2 + 50}),(err) => {
+		client.publish('v1/devices/me/telemetry', JSON.stringify({temperature: temperatura, humidity: umidade, wind: vento, termic: sensacaoTermica}),(err) => {
 			console.log(err)
 		})
-		console.log('publish', {temperature: randomNum1 + 20, humidity: randomNum2 + 50})
+		console.log('publish', {temperature: temperatura, humidity: umidade, wind: vento, termic: sensacaoTermica})
 	}, 1000);
 
 	setInterval(() => {
-		const [ varRandomNum1, varRandomNum2] = getTwoRandomNumbers();
-		randomNum1 = varRandomNum1;
-		randomNum2 = varRandomNum2
+		const [temperatura1, umidade1, vento1, sensacaoTermica1] = gerarDadosRioDeJaneiro(); 
+		temperatura = temperatura1;
+		umidade = umidade1;
+		vento = vento1;
+		sensacaoTermica = sensacaoTermica1
 	}, 2000)
 })
-
+j \
 
 
 // "v1/devices/me/telemetry",json.dumps(sensor_data),1
