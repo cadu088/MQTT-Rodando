@@ -61,17 +61,14 @@ function calcSensT(tempAtual){
 
 
 
-function gerarDadosRioDeJaneiro() {
-	
+function gerarDadosRioDeJaneiro() {	
 	// const sensacaoTermica = Math.floor(Math.random() * 7 + 30); // sensação térmica entre 30 e 34 graus Celsius
 	temperatura = calcTemp(temperatura);
 	umidade = calcHum(umidade);
 	vento = calcVent(vento)
 	sensacaoTermica = calcSensT(temperatura);
 	return [temperatura, umidade, vento, sensacaoTermica];
- }
-  
-
+}
 
 client.on('connect', () => {
 	setInterval(() => {
@@ -92,7 +89,5 @@ client.on('connect', () => {
 	// 	sensacaoTermica = sensacaoTermica1
 	// }, 1000)
 })
-
-
 
 // "v1/devices/me/telemetry",json.dumps(sensor_data),1
